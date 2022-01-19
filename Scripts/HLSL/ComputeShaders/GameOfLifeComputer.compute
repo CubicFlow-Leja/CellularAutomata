@@ -1,0 +1,60 @@
+#pragma kernel FlashInput
+#pragma kernel ComputeGame
+
+
+float TextureSize;
+
+Texture2D InputTex;
+RWTexture2D<float4> RndTex1;
+RWTexture2D<float4> RndTex2;
+RWTexture2D<float4> OutputTex;
+
+
+[numthreads(8, 8, 1)]
+void FlashInput(uint3 id : SV_DispatchThreadID)
+{
+    float Brighten = (InputTex[id.xy].r + InputTex[id.xy].g + InputTex[id.xy].b);
+    Brighten = (Brighten <= 0.5) ? Brighten * 15 : Brighten;
+    OutputTex[id.xy] = InputTex[id.xy];
+    RndTex1[id.xy] = float4(Brighten, Brighten, Brighten, 1);
+    RndTex2[id.xy] = float4(Brighten, Brighten, Brighten, 1);
+}
+
+float4 ComputeState(RWTexture2D<float4> Tex,float2 ID)
+{
+    float Current = Tex[ID%TextureSize].r;
+    
+    //left
+    float L1 = round(Tex[(ID + float2(-1, 1)) % TextureSize].r);
+    float L2 = round(Tex[(ID + float2(-1, 0)) % TextureSize].r);
+    float L3 = round(Tex[(ID + float2(-1, -1)) % TextureSize].r);
+
+    //right
+    float R1 = round(Tex[(ID + float2(1, 1)) % TextureSize].r);
+    float R2 = round(Tex[(ID + float2(1, 0)) % TextureSize].r);
+    float R3 = round(Tex[(ID + float2(1, -1)) % TextureSize].r);
+
+    //middleUpper
+    float MU = round(Tex[(ID + float2(0, 1)) % TextureSize].r);
+
+    //MiddleLower
+    float ML = round(Tex[(ID + float2(0, -1)) % TextureSize].r);
+
+    float neigh = L1 + L2 + L3 + R1 + R2 + R3 + MU + ML;
+
+    float Result;
+    Result = (Current >= 0.25) ? ((neigh < 2) ? 0 : ((neigh > 3) ? 0 : 1)) : ((neigh == 3 ||neigh==7) ? 1 : 0);
+
+   return float4(Result, neigh/8, neigh/8, 1);
+}
+
+[numthreads(8, 8, 1)]
+void ComputeGame(uint3 id : SV_DispatchThreadID)
+{
+    float4 Col = ComputeState(RndTex1, id.xy);
+
+    RndTex2[id.xy] = Col;
+    OutputTex[id.xy] = Col;
+   
+}
+
