@@ -13,8 +13,11 @@ RWTexture2D<float4> OutputTex;
 [numthreads(8, 8, 1)]
 void FlashInput(uint3 id : SV_DispatchThreadID)
 {
-    float Brighten = (InputTex[id.xy].r + InputTex[id.xy].g + InputTex[id.xy].b);
-    Brighten = (Brighten <= 0.5) ? Brighten * 15 : Brighten;
+    float Brighten = (InputTex[id.xy].r + InputTex[id.xy].g + InputTex[id.xy].b)/1.15;
+    float2 CenterVec = id.xy;
+    if (length(CenterVec- TextureSize / 2)> TextureSize / 64)
+        Brighten = 0;
+    //Brighten = (Brighten <= 0.15) ? Brighten * 1 : Brighten;
     OutputTex[id.xy] = InputTex[id.xy];
     RndTex1[id.xy] = float4(Brighten, Brighten, Brighten, 1);
     RndTex2[id.xy] = float4(Brighten, Brighten, Brighten, 1);
@@ -43,9 +46,9 @@ float4 ComputeState(RWTexture2D<float4> Tex,float2 ID)
     float neigh = L1 + L2 + L3 + R1 + R2 + R3 + MU + ML;
 
     float Result;
-    Result = (Current >= 0.25) ? ((neigh < 2) ? 0 : ((neigh > 3) ? 0 : 1)) : ((neigh == 3 ||neigh==7) ? 1 : 0);
+    Result = (Current >= 0.05) ? ((neigh < 2) ? 0 : ((neigh > 3) ? 0 : 1)) : ((neigh == 3 ||neigh==4 ) ? 1 : 0);
 
-   return float4(Result, neigh/8, neigh/8, 1);
+   return float4(Result*0.85, neigh /8,  neigh /8, 1);
 }
 
 [numthreads(8, 8, 1)]

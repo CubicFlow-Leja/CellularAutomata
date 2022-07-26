@@ -46,22 +46,22 @@ public class GameOfLifeController : MonoBehaviour
 
     private Vector3 MousePosOld;
     private Vector3 MousePosNew;
-    private float OrthoSize = 6f;
+    private float OrthoSize = 1f;
     public float CameraSpeed = 5f;
     public float CameraZoomSpeed = 200f;
     void CameraZoom()
     {
-        //drag za move
-        MousePosNew = Input.mousePosition;
-        if (Input.GetKey(KeyCode.Mouse0))
-            MainCam.transform.Translate((MousePosOld - MousePosNew)* CameraSpeed * Time.deltaTime);
-        MousePosOld = MousePosNew;
+        ////drag za move
+        //MousePosNew = Input.mousePosition;
+        //if (Input.GetKey(KeyCode.Mouse0))
+        //    MainCam.transform.Translate((MousePosOld - MousePosNew)* CameraSpeed * Time.deltaTime);
+        //MousePosOld = MousePosNew;
 
         //mouse scroll za zoom
-        float Temp = Input.GetAxis("Mouse ScrollWheel");
+       // float Temp = Input.GetAxis("Mouse ScrollWheel");
 
-        OrthoSize -= CameraZoomSpeed * Temp * Time.deltaTime;
-        OrthoSize = Mathf.Clamp(OrthoSize, 1f, 6f);
+        OrthoSize +=( ((!Input.GetKey(KeyCode.Mouse1))?1f:6f)-OrthoSize)*CameraZoomSpeed  * Time.deltaTime;
+        OrthoSize = Mathf.Clamp(OrthoSize, 1f, 5f);
 
         MainCam.orthographicSize = OrthoSize;
     }

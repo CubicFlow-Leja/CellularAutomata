@@ -182,18 +182,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
-    m_FontStyle: 0
+    m_FontSize: 55
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 60
+    m_MaxSize: 65
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Turn Gaben into cellular automata
+  m_Text: Start
 --- !u!222 &924230037
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -256,7 +256,7 @@ Camera:
   far clip plane: 25
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 1
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -502,7 +502,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 175.8, y: -112.7}
-  m_SizeDelta: {x: 323.8, y: 200}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1560868428
 MonoBehaviour:
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6014151, g: 0.8018868, b: 0.7779574, a: 0.78039217}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78039217}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -630,13 +630,13 @@ MonoBehaviour:
   GabenBtn: {fileID: 1560868428}
   MainCam: {fileID: 963194227}
   GameOfLifeComputer: {fileID: 7200000, guid: 49b15593ee1001943b67430b02eebc8d, type: 3}
-  InitalTexture: {fileID: 2800000, guid: 9b8dfc41a7be12d449e7863e98f89d11, type: 3}
+  InitalTexture: {fileID: 2800000, guid: 88135e80c28a21049ba7b3cde5e0b725, type: 3}
   OutputTex: {fileID: 0}
   RndTex1: {fileID: 0}
   RndTex2: {fileID: 0}
   mainMat: {fileID: 2100000, guid: 6ee433c5c59da6b43afb6a6346044f86, type: 2}
   CameraSpeed: 0.5
-  CameraZoomSpeed: 200
+  CameraZoomSpeed: 0.05
 --- !u!4 &1652161769
 Transform:
   m_ObjectHideFlags: 0
